@@ -11,6 +11,7 @@ SCREEN_HEIGHT = 600
 PLAYER_SIZE = 50
 WALL_SIZE = 50
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen_background = pygame.transform.scale(pygame.image.load('../assets/grass.jpg'),(1920, 600))
 pygame.display.set_caption("Robot Game")
 sprite_not_scaled = pygame.image.load('../assets/robot.gif')
 sprite_image = pygame.transform.scale(sprite_not_scaled, (30, 30))
@@ -24,16 +25,16 @@ waters_group = pygame.sprite.Group()
 
 def load_map(filename):
     with open(filename, 'r') as f:
-        map_data = f.readlines()
-    return [line.strip() for line in map_data]
+        map_info = f.readlines()
+    return [line.strip() for line in map_info]
 
 
-def generate_objects(map_data):
+def generate_objects(map_info):
     diamonds = []
     bombs = []
     walls = []
     waters = []
-    for y, row in enumerate(map_data):
+    for y, row in enumerate(map_info):
         for x, tile in enumerate(row):
             if tile == 'D':
                 diamonds.append((x * PLAYER_SIZE, y * PLAYER_SIZE))
@@ -46,8 +47,8 @@ def generate_objects(map_data):
     return diamonds, bombs, walls, waters
 
 
-map_data = load_map("../assets/map.txt")
-diamonds_coords, bombs_coords, walls_coords, waters_coords = generate_objects(map_data)
+map_info = load_map("../assets/map.txt")
+diamonds_coords, bombs_coords, walls_coords, waters_coords = generate_objects(map_info)
 
 pygame.init()
 
@@ -114,10 +115,9 @@ while running:
         player.score += 1
         print("¡Has recogido un diamante! Diamantes en la mochila:", player.score)
 
-    screen.fill((255, 255, 255))
+    screen.blit(screen_background, screen_background.get_rect())
     all_sprites.draw(screen)
     pygame.display.flip()
-
     clock.tick(30)
 
 pygame.quit()
