@@ -6,12 +6,12 @@ from objects.Player import Player
 from objects.Wall import Wall
 from objects.Water import Water
 
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
 PLAYER_SIZE = 50
 WALL_SIZE = 50
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-screen_background = pygame.transform.scale(pygame.image.load('../assets/grass.jpg'),(1920, 600))
+screen_background = pygame.transform.scale(pygame.image.load('../assets/grass.jpg'), (1280, 720))
 pygame.display.set_caption("Robot Game")
 sprite_not_scaled = pygame.image.load('../assets/robot.gif')
 sprite_image = pygame.transform.scale(sprite_not_scaled, (30, 30))
@@ -114,6 +114,10 @@ while running:
     for diamond in pygame.sprite.spritecollide(player, diamonds_group, True):
         player.score += 1
         print("¡Has recogido un diamante! Diamantes en la mochila:", player.score)
+
+    if len(diamonds_group) == 0:
+        print("¡Enhorabuena has conseguido todos los diamantes, ahora es hora de venderlos!")
+        running = False
 
     screen.blit(screen_background, screen_background.get_rect())
     all_sprites.draw(screen)
