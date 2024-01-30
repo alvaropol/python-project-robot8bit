@@ -13,7 +13,7 @@ WALL_SIZE = 50
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 screen_background = pygame.transform.scale(pygame.image.load('../assets/grass.jpg'), (1280, 720))
 pygame.display.set_caption("Robot Game")
-sprite_not_scaled = pygame.image.load('../assets/robot.gif')
+sprite_not_scaled = pygame.image.load('../assets/player_front.png')
 sprite_image = pygame.transform.scale(sprite_not_scaled, (30, 30))
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
@@ -84,12 +84,16 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 dy = -PLAYER_SIZE
+                player.image = pygame.transform.scale(pygame.image.load('../assets/player_up.png'), (30, 30))
             elif event.key == pygame.K_DOWN:
                 dy = PLAYER_SIZE
+                player.image = pygame.transform.scale(pygame.image.load('../assets/player_down.png'), (30, 30))
             elif event.key == pygame.K_LEFT:
                 dx = -PLAYER_SIZE
+                player.image = pygame.transform.scale(pygame.image.load('../assets/player_left.png'), (30, 30))
             elif event.key == pygame.K_RIGHT:
                 dx = PLAYER_SIZE
+                player.image = pygame.transform.scale(pygame.image.load('../assets/player_right.png'), (30, 30))
             elif event.key == pygame.K_b:
                 if len(bombs_group) > 0:
                     bomb = bombs_group.sprites()[0]
@@ -108,7 +112,7 @@ while running:
     dx, dy = 0, 0
 
     if player.health <= 0:
-        print("¡Has perdido todos los puntos de vida, por lo que has muerto entre terribles sufrimientos!")
+        print("¡Has perdido todos los puntos de vida, has muerto entre terribles sufrimientos!")
         running = False
 
     for diamond in pygame.sprite.spritecollide(player, diamonds_group, True):

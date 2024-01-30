@@ -28,7 +28,8 @@ class Player(pygame.sprite.Sprite):
         for wall in self.walls_group:
             if wall.rect.collidepoint(next_x, next_y):
                 self.health -= 1
-                print("¡Te has chocado con un muro, acabas de perder 1 de vida! Vida restante:", self.health)
+                if self.health >= 0:
+                    print("¡Te has chocado con un muro, acabas de perder 1 de vida! Vida restante:", self.health)
                 return
 
         self.rect.x = min(max(next_x, 0), SCREEN_WIDTH - PLAYER_SIZE)
@@ -39,8 +40,9 @@ class Player(pygame.sprite.Sprite):
                 if not self.has_suit:
                     if not self.is_in_water or self.last_water_position != self.rect.topleft:
                         self.health -= 3
-                        print("Estás en el agua sin el traje acuático, acabas de perder 3 de vida. Vida restante:",
-                              self.health)
+                        if self.health >= 0:
+                            print("Estás en el agua sin el traje acuático, acabas de perder 3 de vida. Vida restante:",
+                                  self.health)
                         self.is_in_water = True
                         self.last_water_position = self.rect.topleft
                 return
