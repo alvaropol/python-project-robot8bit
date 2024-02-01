@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 from objects.Bomb import Bomb
 from objects.Diamond import Diamond
@@ -15,6 +16,9 @@ screen_background = pygame.transform.scale(pygame.image.load('../assets/grass.jp
 pygame.display.set_caption("Robot Game")
 sprite_not_scaled = pygame.image.load('../assets/player_front.png')
 sprite_image = pygame.transform.scale(sprite_not_scaled, (30, 30))
+mixer.init()
+mixer.music.load('../assets/music.wav')
+mixer.music.play(-1)
 clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 diamonds_group = pygame.sprite.Group()
