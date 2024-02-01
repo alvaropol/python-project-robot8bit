@@ -1,0 +1,3 @@
+Dependencies:
+
+Pygame -> pip install pygame
