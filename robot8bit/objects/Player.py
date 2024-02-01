@@ -6,7 +6,7 @@ PLAYER_SIZE = 50
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, sprite, walls_group, waters_group):
+    def __init__(self, sprite, walls_group, waters_group, aqua_suits_group):
         super().__init__()
         self.image = sprite
         self.rect = self.image.get_rect()
@@ -14,9 +14,11 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = SCREEN_HEIGHT // 2
         self.health = 10
         self.has_suit = False
+        self.is_wearing_suit = False
         self.score = 0
         self.walls_group = walls_group
         self.waters_group = waters_group
+        self.aqua_suits_group = aqua_suits_group
         self.is_on_wall = False
         self.is_in_water = False
         self.last_water_position = None
@@ -24,6 +26,10 @@ class Player(pygame.sprite.Sprite):
     def update(self, dx, dy):
         next_x = self.rect.x + dx
         next_y = self.rect.y + dy
+
+        for aqua_suit in pygame.sprite.spritecollide(self, self.aqua_suits_group, True):
+            self.has_suit = True
+            print("¡Has recogido un traje acuático!")
 
         for wall in self.walls_group:
             if wall.rect.collidepoint(next_x, next_y):
@@ -37,7 +43,7 @@ class Player(pygame.sprite.Sprite):
 
         for water in self.waters_group:
             if water.rect.collidepoint(self.rect.center):
-                if not self.has_suit:
+                if not self.is_wearing_suit:
                     if not self.is_in_water or self.last_water_position != self.rect.topleft:
                         self.health -= 3
                         if self.health >= 0:
@@ -47,3 +53,11 @@ class Player(pygame.sprite.Sprite):
                         self.last_water_position = self.rect.topleft
                 return
         self.is_in_water = False
+
+    def toggle_suit(self):
+        if self.has_suit:
+            self.is_wearing_suit = not self.is_wearing_suit
+            if self.is_wearing_suit:
+                print("Te has COLOCADO el traje acuático")
+            else:
+                print("Te has QUITADO el traje acuático")
