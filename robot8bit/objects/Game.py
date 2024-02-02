@@ -81,16 +81,38 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         dy = -player_size
-                        player.image = pygame.transform.scale(pygame.image.load('../assets/player_up.png'), (30, 30))
+                        if player.is_wearing_suit:
+                            player.image = pygame.transform.scale(pygame.image.load('../assets/player_up_aqua_suit.png'),
+                                                                  (30, 30))
+                        else:
+                            player.image = pygame.transform.scale(pygame.image.load('../assets/player_up.png'), (30, 30))
                     elif event.key == pygame.K_DOWN:
                         dy = player_size
-                        player.image = pygame.transform.scale(pygame.image.load('../assets/player_down.png'), (30, 30))
+                        if player.is_wearing_suit:
+                            player.image = pygame.transform.scale(
+                                pygame.image.load('../assets/player_down_aqua_suit.png'),
+                                (30, 30))
+                        else:
+                            player.image = pygame.transform.scale(pygame.image.load('../assets/player_down.png'),
+                                                                  (30, 30))
                     elif event.key == pygame.K_LEFT:
                         dx = -player_size
-                        player.image = pygame.transform.scale(pygame.image.load('../assets/player_left.png'), (30, 30))
+                        if player.is_wearing_suit:
+                            player.image = pygame.transform.scale(
+                                pygame.image.load('../assets/player_left_aqua_suit.png'),
+                                (30, 30))
+                        else:
+                            player.image = pygame.transform.scale(pygame.image.load('../assets/player_left.png'),
+                                                                  (30, 30))
                     elif event.key == pygame.K_RIGHT:
                         dx = player_size
-                        player.image = pygame.transform.scale(pygame.image.load('../assets/player_right.png'), (30, 30))
+                        if player.is_wearing_suit:
+                            player.image = pygame.transform.scale(
+                                pygame.image.load('../assets/player_right_aqua_suit.png'),
+                                (30, 30))
+                        else:
+                            player.image = pygame.transform.scale(pygame.image.load('../assets/player_right.png'),
+                                                                  (30, 30))
                     elif event.key == pygame.K_b:
                         if len(bombs_group) > 0:
                             bomb = bombs_group.sprites()[0]
@@ -141,7 +163,9 @@ class Game:
 
             screen.blit(inventory_bg, (1180, 3))
             screen.blit(font.render("T", True, (0, 0, 0)), (1196, 12))
-            screen.blit(aqua_suit_icon, (1233, 8))
+
+            if player.has_suit:
+                screen.blit(aqua_suit_icon, (1233, 8))
 
             pygame.display.flip()
             clock.tick(30)

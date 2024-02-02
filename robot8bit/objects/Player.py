@@ -58,6 +58,8 @@ class Player(pygame.sprite.Sprite):
         if self.has_suit:
             self.is_wearing_suit = not self.is_wearing_suit
             if self.is_wearing_suit:
+                self.image = pygame.transform.scale(pygame.image.load('../assets/player_front_aqua_suit.png'), (30, 30))
                 print("Te has COLOCADO el traje acuático")
             else:
+                self.image = pygame.transform.scale(pygame.image.load('../assets/player_front.png'), (30, 30))
                 print("Te has QUITADO el traje acuático")
