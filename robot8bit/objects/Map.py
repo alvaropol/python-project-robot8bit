@@ -25,6 +25,7 @@ class Map:
         diamonds = []
         bombs = []
         aqua_suits = []
+        potions = []
 
         for obj_type, count in object_counts.items():
             for _ in range(count):
@@ -36,5 +37,7 @@ class Map:
                     bombs.append(pos)
                 elif obj_type == 'T':
                     aqua_suits.append(pos)
+                elif obj_type == 'P':
+                    potions.append(pos)
 
-        return diamonds, bombs, [], [], aqua_suits
+        return diamonds, bombs, potions, [], aqua_suits
