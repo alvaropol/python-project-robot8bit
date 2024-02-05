@@ -47,6 +47,7 @@ class Game:
         inventory_bg = pygame.transform.scale(pygame.image.load('../assets/inventory_bg.png'), (90, 40))
         aqua_suit_icon = pygame.transform.scale(pygame.image.load('../assets/aqua_suit.png'), (30, 30))
         potion_icon = pygame.transform.scale(pygame.image.load('../assets/potion.png'), (30, 30))
+        movements = 0
 
         for y, row in enumerate(map_info[1:]):
             for x, tile in enumerate(row):
@@ -86,12 +87,15 @@ class Game:
         dx, dy = 0, 0
         running = True
         while running:
+            points = 2000 - (movements * 10)
+            points = max(points, 0)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         dy = -player_size
+                        movements += 1
                         if player.is_wearing_suit:
                             player.image = pygame.transform.scale(
                                 pygame.image.load('../assets/player_up_aqua_suit.png'),
@@ -101,6 +105,7 @@ class Game:
                                                                   (30, 30))
                     elif event.key == pygame.K_DOWN:
                         dy = player_size
+                        movements += 1
                         if player.is_wearing_suit:
                             player.image = pygame.transform.scale(
                                 pygame.image.load('../assets/player_down_aqua_suit.png'),
@@ -110,6 +115,7 @@ class Game:
                                                                   (30, 30))
                     elif event.key == pygame.K_LEFT:
                         dx = -player_size
+                        movements += 1
                         if player.is_wearing_suit:
                             player.image = pygame.transform.scale(
                                 pygame.image.load('../assets/player_left_aqua_suit.png'),
@@ -119,6 +125,7 @@ class Game:
                                                                   (30, 30))
                     elif event.key == pygame.K_RIGHT:
                         dx = player_size
+                        movements += 1
                         if player.is_wearing_suit:
                             player.image = pygame.transform.scale(
                                 pygame.image.load('../assets/player_right_aqua_suit.png'),
@@ -157,6 +164,8 @@ class Game:
 
             for diamond in pygame.sprite.spritecollide(player, diamonds_group, True):
                 player.score += 1
+                movements -= 1
+                points += 50
                 print("¡Has recogido un diamante! Diamantes en la mochila:", player.score)
 
             if len(diamonds_group) == 0:
@@ -195,6 +204,9 @@ class Game:
             screen.blit(potion_icon, (500, 8))
             potion_text = font.render(f"x {potions_group.__len__()}", True, (255, 255, 255))
             screen.blit(potion_text, (550, 10))
+
+            potion_text = font.render(f"Score: {points}", True, (255, 255, 255))
+            screen.blit(potion_text, (760, 10))
 
             screen.blit(inventory_bg, (920, 3))
             screen.blit(font.render(f"{player.score}", True, (0, 0, 0)), (936, 12))
