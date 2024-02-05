@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 from pygame import mixer
 
@@ -212,6 +214,7 @@ class Game:
             clock.tick(30)
 
         pygame.quit()
+        sys.exit()
 
 
 def exit_screen(screen, screen_width, screen_height):
