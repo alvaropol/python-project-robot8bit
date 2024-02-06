@@ -2,8 +2,8 @@ import sys
 
 import pygame
 
-from objects.Button import Button
-from objects.Game import Game
+from Button import Button
+from Game import Game
 
 game = Game()
 screen = pygame.display.set_mode((1280, 720))

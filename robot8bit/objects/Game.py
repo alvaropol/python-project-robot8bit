@@ -3,14 +3,14 @@ import sys
 import pygame
 from pygame import mixer
 
-from objects.AquaSuit import AquaSuit
-from objects.Bomb import Bomb
-from objects.Diamond import Diamond
-from objects.Map import Map
-from objects.Player import Player
-from objects.Potion import Potion
-from objects.Wall import Wall
-from objects.Water import Water
+from AquaSuit import AquaSuit
+from Bomb import Bomb
+from Diamond import Diamond
+from Map import Map
+from Player import Player
+from Potion import Potion
+from Wall import Wall
+from Water import Water
 
 pygame.init()
 
